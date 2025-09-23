@@ -156,3 +156,12 @@ mov byte [rdi], 0       ; 8-bit move (explicit)
 ; AT&T
 movq $5, %rax           ; 64-bit move (q = quad word)
 movb $0, (%rdi)         ; 8-bit move (b = byte)
+
+
+Calling convention rules (System V AMD64)
+
+Caller-saved (volatile) registers: rax, rcx, rdx, rsi, rdi, r8–r11.
+→ You can freely use their 8-bit parts (al, bl, cl, dl, r8b…).
+
+Callee-saved (non-volatile) registers: rbx, rbp, r12–r15.
+→ If you touch these, you’re supposed to restore them before ret.
