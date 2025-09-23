@@ -1,19 +1,14 @@
 ASM = nasm
 ASMFLAGS = -f elf64
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-
 NAME = libasm.a
 HEADER = libasm.h
-
-ASM_SRCS = ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
- 
+ASM_SRCS = ft_strlen.s
 ASM_BONUS_SRCS = ft_atoi_base_bonus.s ft_list_push_front_bonus.s ft_list_size_bonus.s \
 				 ft_list_sort_bonus.s ft_list_remove_if_bonus.s
-
 MAIN_SRC = main.c
-
+TEST_NAME = test_libasm
 OBJDIR = obj
 ASM_OBJS = $(patsubst %.s,$(OBJDIR)/%.o,$(ASM_SRCS))
 ASM_BONUS_OBJS = $(patsubst %.s,$(OBJDIR)/%.o,$(ASM_BONUS_SRCS))
@@ -43,6 +38,16 @@ $(NAME): $(ASM_OBJS)
 	@ar rcs $(NAME) $(ASM_OBJS)
 	@echo "$(GREEN)✓ $(NAME) created successfully$(RESET)"
 
+$(TEST_NAME): $(ASM_OBJS) $(MAIN_OBJ)
+	@echo "$(BLUE)Creating test executable $(TEST_NAME)...$(RESET)"
+	@$(CC) $(MAIN_OBJ) $(ASM_OBJS) -o $(TEST_NAME)
+	@echo "$(GREEN)✓ $(TEST_NAME) created successfully$(RESET)"
+
+test: $(TEST_NAME)
+	@echo "$(BLUE)Running tests...$(RESET)"
+	@./$(TEST_NAME)
+	@echo "$(GREEN)✓ Tests completed$(RESET)"
+
 bonus: $(ASM_OBJS) $(ASM_BONUS_OBJS)
 	@echo "$(BLUE)Creating library $(NAME) with bonus...$(RESET)"
 	@ar rcs $(NAME) $(ASM_OBJS) $(ASM_BONUS_OBJS)
@@ -59,4 +64,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re test
