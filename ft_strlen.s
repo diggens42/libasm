@@ -10,5 +10,5 @@ ft_strlen:
     inc rax                     ; i++
     jmp .loop                   ; jump back to loop (unconditional jump)
 
-.done
+.done:
     ret                         ; rax is automatically the return register for int/ptr values (calling convention rules)

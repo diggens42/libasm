@@ -4,6 +4,7 @@ https://www.youtube.com/watch?v=6S5KRJv-7RU
 https://www.tutorialspoint.com/assembly_programming/index.htm
 https://stackoverflow.com/questions/5041481/strlen-in-assembly
 https://www.reddit.com/r/asm/comments/l4rzbf/strcpy_implementation/
+https://stackoverflow.com/questions/63110044/strcmp-in-nasm-x86-64-registers
 
 Bit value	                        1	1	1	1	1	1	1	1
 Position value as a power of base 2	128	64	32	16	8	4	2	1

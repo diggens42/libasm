@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fwahl <fwahl@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 15:44:39 by fwahl             #+#    #+#             */
-/*   Updated: 2025/09/23 16:49:45 by fwahl            ###   ########.fr       */
+/*   Updated: 2025/09/23 19:14:14 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
+
+static void tests_strcmp(const char *s1, const char *s2, const char *description)
+{
+    int original = strcmp(s1, s2);
+    int custom   = ft_strcmp(s1, s2);
+
+    printf("Testing: %s\n", description);
+    printf("  String 1: \"%s\"\n", s1);
+    printf("  String 2: \"%s\"\n", s2);
+    printf("  Expected: %d\n", original);
+    printf("  Actual:   %d\n", custom);
+    printf("  Result:   %s\n\n",
+        ((original == 0 && custom == 0) || (original < 0 && custom < 0) || (original > 0 && custom > 0))
+        ? "PASS ✓" : "FAIL ✗");
+
+    // Assert that the signs match
+    assert((original == 0 && custom == 0) || (original < 0 && custom < 0) || (original > 0 && custom > 0));
+}
 
 static void tests_strcpy(const char *src, const char *description)
 {
@@ -67,6 +85,20 @@ int main()
     tests_strcpy("This is a longer string to test", "Longer string");
     tests_strcpy("String with numbers 123456", "String with numbers");
     tests_strcpy("Special chars: !@#$%^&*()", "Special characters");
+
+    
+    printf("=== Testing ft_strcmp vs standard strcmp ===\n\n");
+    tests_strcmp("", "", "Empty strings");
+    tests_strcmp("H", "H", "Single character equal");
+    tests_strcmp("Hello", "Hello", "Equal words");
+    tests_strcmp("Hello", "Hell", "Prefix comparison");
+    tests_strcmp("Apple", "Banana", "Different words");
+    tests_strcmp("Banana", "Apple", "Reverse different words");
+    tests_strcmp("Hello", "hello", "Case-sensitive comparison");
+    tests_strcmp("", "Non-empty", "Empty vs non-empty");
+    tests_strcmp("Non-empty", "", "Non-empty vs empty");
+    tests_strcmp("123", "1234", "Numbers, prefix case");
+    tests_strcmp("abc\xFF", "abc\x7F", "High-bit character comparison");
 
     return (0);
 }
